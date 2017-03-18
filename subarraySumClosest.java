@@ -42,16 +42,18 @@ public class Solution {
             return points;
         }
         
-        if (nums.length == 1) {
+        int len = nums.length;
+        if (len == 1) {
             points[0] = points[1] = 0;
             return points;
         }
         
-        Pair[] pairs = new Pair[nums.length];
+        Pair[] pairs = new Pair[len + 1];
         int sum = 0;
+        pairs[0] = new Pair(0, 0);
         
-        for(int i = 0; i < nums.length; i++) {
-            sum += nums[i];
+        for(int i = 1; i <= len; i++) {
+            sum += nums[i - 1];
             pairs[i] = new Pair(sum, i);
         }
         
@@ -62,15 +64,14 @@ public class Solution {
         });
         
         int distance = Integer.MAX_VALUE;
-        for(int i = 0; i < pairs.length - 1; i++) {
-            if (pairs[i+1].sum - pairs[i].sum < distance) {
-                distance = pairs[i+1].sum - pairs[i].sum;
-                points[0] = Math.min(pairs[i+1].index, pairs[i].index) + 1;
-                points[1] = Math.max(pairs[i+1].index, pairs[i].index);
+        for(int i = 1; i <= len; i++) {
+            if (pairs[i].sum - pairs[i - 1].sum < distance) {
+                distance = pairs[i].sum - pairs[i - 1].sum;
+                points[0] = Math.min(pairs[i].index - 1, pairs[i - 1].index - 1) + 1;
+                points[1] = Math.max(pairs[i].index - 1, pairs[i - 1].index - 1);
             }
         }
         
         return points;
     }
 }
-
