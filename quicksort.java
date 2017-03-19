@@ -10,6 +10,7 @@ public class Solution {
         partition(A, 0, A.length - 1);
     }
     
+/** 19136 ms*/
     private void partition(int[] A, int start, int end) {
         if(start >= end) {
             return;
@@ -30,6 +31,7 @@ public class Solution {
     }
 
 /**
+Total Runtime: 12136 ms
     private void partition(int[] A, int start, int end) {
         if(start >= end) {
             return;
