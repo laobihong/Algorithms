@@ -35,7 +35,7 @@ Easy Maximum Subarray 38 %
                 int max = Integer.MIN_VALUE;  
                 int localMax = 0;  
                 // select j - 1 numbers from the first m element(i.e. nums[0] ~ nums[m]).
-                // Since we have i numbers, the upper bound of m is i - 1
+                // Since we have i numbers in total, the upper bound of m is i - 1
                 for (int m = i - 1; m >= j - 1; m--) {  
                     // the next two lines are computing max subarray(m + 1, i)
                     localMax = Math.max(nums[m], nums[m]+localMax);  
