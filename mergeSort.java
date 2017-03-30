@@ -46,7 +46,7 @@ public void sortIntegers2(int[] A) {
 
 // =============================================================
 // not working, since Java is "pass by value" rather than
-// "pass by reference", which is the case in, say, c++
+// "pass by reference", which could be the case in, say, c++
     public void sortIntegers2(int[] A) {
         if (A == null || A.length == 0) {
             return;
