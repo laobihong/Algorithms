@@ -1,4 +1,4 @@
-/**
+/*
 Find K-th largest element in an array.
 
  Notice
@@ -20,8 +20,8 @@ Medium Wiggle Sort II 25 %
 Medium Kth Smallest Number in Sorted Matrix 22 %
 Easy Median 23 %
 
-×/
 
+// solution 1: always use the first number as the pivot
 class Solution {
 
     public int kthLargestElement(int k, int[] numbers) {
@@ -71,3 +71,83 @@ class Solution {
     }
     
 }
+*/
+
+// wrong solution 1
+    private int partition(int[] nums, int start, int end, int k) {
+        int left = start, right = end;
+        int pivot = nums[start + (end - start) / 2];
+        while (left <= right) {
+            while (left <= right && nums[left] > pivot) {
+                left++;
+            }
+            while (left <= right && nums[right] < pivot) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        
+        if (right - start + 1 < k) {
+            return partition(nums, right + 1, end, k - right + start - 1);
+        }
+        else if (left - start + 1 > k) {
+            return partition(nums, start, left - 1, k);
+        }
+        else {
+            return nums[right + 1];
+        }
+     }
+
+//=========================
+// Template from Lewis Liu
+
+    public int kthLargestElement(int k, int[] nums) {
+        if (nums == null || nums.length == 0 || k <= 0 || k > nums.length) {
+            return -1;
+        }
+        
+        return partition(nums, 0, nums.length - 1, k);
+    }
+    
+    private int partition(int[] nums, int start, int end, int k) {
+        int left = start, right = end;
+        int pivot = nums[start + (end - start) / 2];
+        while (left <= right) {
+            while (left <= right && nums[left] > pivot) {
+                left++;
+            }
+            while (left <= right && nums[right] < pivot) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        
+        if (right - start + 1 >= k) {
+            return partition(nums, start, right, k);
+        }
+        else if (left - start + 1 <= k) {
+            return partition(nums, left, end, k - (left - start));
+        }
+        else {
+            return nums[right + 1];
+        }
+        /* ATTN: here [start,...,right,(1 or 0 elements),left,...,end]
+we must use (start, right) and (left, end) as the next pairs. It is
+WRONG to use (start, left - 1) and (right + 1, end), as written above in wrong solution 1, since there might be
+cases like right[ (some element), left,...,end], i.e. right is already == -1.
+then if we pass (3,{9,8,4,3,2}), then right + 1 == end == 3, infinite loop
+*/
+     }
+
