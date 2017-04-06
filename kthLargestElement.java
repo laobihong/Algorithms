@@ -147,7 +147,10 @@ class Solution {
 we must use (start, right) and (left, end) as the next pairs. It is
 WRONG to use (start, left - 1) and (right + 1, end), as written above in wrong solution 1, since there might be
 cases like right[ (some element), left,...,end], i.e. right is already == -1.
-then if we pass (3,{9,8,4,3,2}), then right + 1 == end == 3, infinite loop
+then if we pass (3,{9,8,4,3,2}), then right + 1 == end == 3, infinite loop.
+why this solution works? because it TAKES THE RESPONSE in the next loop ITSELF instead of pushing to other 
+section of the array. e.g. if right - start + 1 (the length of the left section) >= k, then we are guaranteed that
+if we use (nums, start, right, k) we MUST have the solution somewhere. To the contrary, if we use solution 2, we don't know where the solution EXACTLY would be. e.g. 3,{9,8,4,3,2} we should return nums[right + 1] instead! Namely, we failed to rule out the possibility the first if contains some cases that overlap with those in the last else.
 */
      }
 
