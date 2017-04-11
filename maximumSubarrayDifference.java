@@ -84,8 +84,13 @@ public class Solution {
         
         int maximum = Integer.MIN_VALUE;
         for(int i = 1; i <= n - 1; i++) {
-            int left = Math.abs(leftMax[i] - rightMin[i]);
-            int right = Math.abs(rightMax[i] - leftMin[i]);
+            //int left = Math.abs(leftMax[i] - rightMin[i]);
+            //int right = Math.abs(rightMax[i] - leftMin[i]);
+            int left = leftMax[i] - rightMin[i];
+            int right = rightMax[i] - leftMin[i];
+/**
+We denote leftMax[i], rightMin[i], rightMax[i] and leftMin[i] as A, B, C, and D respectively. By their definition (the largest/smallest subarray starting from a prev element to any prev element or self), A > D and B > C. Then we have (B-A) - (C-D) = (B-c) + (D-A) < 0 => B-A is always a dominated option compared with C-D. For the same reason we can also eliminate D-C. Therefore, the abs is unnecessary. 
+*/
             maximum = Math.max(maximum, Math.max(left, right));
         }
         

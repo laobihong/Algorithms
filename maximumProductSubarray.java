@@ -12,6 +12,9 @@ Easy Minimum Subarray 38 %
 Medium Maximum Subarray II 25 %
 */
 
+/**
+Meaning of max and min: [any prev num, current i included] the maximum/minimum product of a subarray that start from ANY prev element and ENDS WITH CURRENT ITEM. Maximum and minimum will carry ALL the information about the positivity/negativity of ALL the prev elements, which product knows nothing about.
+*/
 public class Solution {
     /**
      * @param nums: an array of integers
