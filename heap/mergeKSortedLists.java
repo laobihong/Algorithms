@@ -27,6 +27,7 @@ Easy Merge Two Sorted Arrays 36 %
 Medium Ugly Number II
 */
 
+// follow up: if 1TB disk but only 1GB memory available, what to do? only sln 1 works, since we can sort 1000 groups, and then put all of their head into the memory (heap). Each time we poll and push, so the memory consumption remained unchanged.
 // sln 1: 
     public ListNode mergeKLists(List<ListNode> lists) {  
         
