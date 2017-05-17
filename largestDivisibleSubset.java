@@ -64,6 +64,8 @@ public class Solution {
             }
         }
         
+// NOTE: here cannot use do while, since the first round doesn't need to 
+// assign maxIndex = pre[maxIndex]! Say no to Danaima!
         subset.add(nums[maxIndex]);
         while (maxIndex != pre[maxIndex]) {
             maxIndex = pre[maxIndex];
