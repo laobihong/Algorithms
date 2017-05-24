@@ -24,6 +24,7 @@ Medium Connecting Graph 40 %
 Medium Connected Component in Undirected Graph 24 %
 */
 
+// bfs
 public boolean validTree(int n, int[][] edges) {
         if ( n <= 0 || edges == null) {
             return false;
@@ -67,4 +68,56 @@ public boolean validTree(int n, int[][] edges) {
             }
         }
         return set.size() == n;
+    }
+
+// union-find
+    public boolean validTree(int n, int[][] edges) {
+        if ( n <= 0 || edges == null) {
+            return false;
+        }
+        
+        if (edges.length == 0) {
+            return n == 1;
+        }
+        
+        if ( n != edges.length + 1) {
+            return false;
+        }
+        
+        int len = edges.length;
+        UnionFind uf = new UnionFind(n);
+        for (int i = 0; i < len; i++) {
+            int n1 = edges[i][0];
+            int n2 = edges[i][1];
+            if (uf.find(n1) == uf.find(n2)){
+                return false;
+            }
+            uf.union(n1, n2);
+        }
+        return true;
+    }
+    
+    class UnionFind {
+        int[] father;
+        public UnionFind(int n) {
+            father = new int[n];
+            for (int i = 0; i < n; i++) {
+                father[i] = i;
+            }
+        }
+        
+        public void union(int a, int b) {
+            int fa_a = find(a);
+            int fa_b = find(b);
+            if (fa_a != fa_b) {
+                father[fa_a] = fa_b;
+            }
+        }
+        
+        public int find(int a) {
+            if (father[a] == a) {
+                return a;
+            }
+            return father[a] = find(father[a]);
+        }
     }
