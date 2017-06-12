@@ -47,4 +47,87 @@ Related Problems
 Easy Consistent Hashing
 */
 
+// sol 1: self mock
+// use a hashmap to keep track of the tail, so next insert is O(1), and NO extra memory COMPLEXITY(but cost more memory),
+// if properly hashed, each chain shouldn't be too long, so the hashmap is not that necessary.
+public ListNode[] rehashing(ListNode[] hashTable) {
+        if (hashTable == null) {
+            return null;
+        }
+        int len = hashTable.length;
+        ListNode[] ans = new ListNode[len * 2];
+        Map<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+        
+        for (int i = 0; i < len * 2; i++) {
+            ans[i] = new ListNode(-1);
+            map.put(i, ans[i]);
+        }
+        
+        for (int i = 0; i < len; i++) {
+            ListNode node = hashTable[i];
+            while (node != null) {
+                int index = getIndex(node, len * 2);
+                ListNode curTail = map.get(index);
+                curTail.next = new ListNode(node.val);
+                map.put(index, curTail.next);
+                node = node.next;
+            }
+        }// end for
+        
+        for (int i = 0; i < len * 2; i++) {
+            ans[i] = ans[i].next;
+        }
+        
+        return ans;
+    }
+    
+    private int getIndex(ListNode node, int len) {
+        int val = node.val;
+// here val could be negative, so + len to ensure it becomes positive
+        return (val%len + len) % len;
+    }
+
+// sol 2: each time use while to get to the tail of the new table, no need to query against a map
+ public ListNode[] rehashing(ListNode[] hashTable) {
+        if(hashTable == null || hashTable.length == 0) {
+            return hashTable;
+        }
+        
+        ListNode[] newTable = new ListNode[hashTable.length * 2];
+        
+        // copy nodes into new table
+        for(ListNode node: hashTable) {
+            while(node != null) {
+                insertNode(newTable, node);
+                node = node.next;
+            }
+        }// end for
+        
+        return newTable;
+    }
+    
+    private void insertNode(ListNode[] newTable, ListNode node) {
+        int key = (node.val % newTable.length + newTable.length) % newTable.length;
+        /**int key = 0;
+        if(node.val >= 0) {
+            key = node.val % newTable.length;
+        }
+        else {
+            key = (node.val % newTable.length + newTable.length) % newTable.length;
+        }*/
+        if(newTable[key] == null) {
+            newTable[key] = new ListNode(node.val);
+        }
+        else{
+            ListNode head = newTable[key];
+            while(head.next != null) {
+                head = head.next;
+            }
+            head.next = new ListNode(node.val);
+        }
+        
+    }
+    
+};
+
 
