@@ -45,6 +45,7 @@ public ArrayList<Integer> medianSlidingWindow(int[] nums, int k) {
         
         PriorityQueue<Integer> upper = new PriorityQueue<>();
         // NOTE: k/2 could be 1/2 == 0, then IllegalArgumentException will be thrown
+        // k or 1 should both be ok to initialize
         PriorityQueue<Integer> lower = new PriorityQueue<>(k, Collections.reverseOrder());
         // initialization
         for (int i = 0; i < k; i++) {
@@ -57,9 +58,9 @@ public ArrayList<Integer> medianSlidingWindow(int[] nums, int k) {
         
         ans.add(lower.peek());
         int len = nums.length;
-        for (int i = 0; i <= len - k - 1; i++) {
+        for (int i = 0; i <= len - k - 1; i++) { // O(n - k)
             // NOTE: upper could be null, so first check lower
-            if (nums[i] <= lower.peek()) {
+            if (nums[i] <= lower.peek()) { // O(k)
                 lower.remove(nums[i]);
             } else {
                 upper.remove(nums[i]);
@@ -86,4 +87,120 @@ public ArrayList<Integer> medianSlidingWindow(int[] nums, int k) {
         }
         
         return ans;
+    }
+// 
+
+// partial sol 1: time limit exceed when k is large (e.g. k == 9009)
+// O (n - k) * k
+    public ArrayList<Integer> medianSlidingWindow(int[] nums, int k) {
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        if (nums == null || k <= 0 || k > nums.length) {
+            return ans;
+        }
+        
+        int len = nums.length;
+        
+        for (int i = 0; i <= len - k; i++) { // O(n - k)
+            PriorityQueue<Integer> heap = new PriorityQueue<>(k, Collections.reverseOrder());
+            for (int j = i; j < i + k; j++) { // O(k)
+                heap.add(nums[j]);
+            }
+            for (int l = 0; l < k/2; l++) { // NOTE: each poll() is log(k), so O(klogk)
+                heap.poll();
+            }
+            ans.add(heap.peek());
+        }
+        
+        return ans;
+    }
+
+// partial sol 2 sliding window + quick select: time limit exceed for large k
+
+    public ArrayList<Integer> medianSlidingWindow(int[] nums, int k) {
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        if (nums == null || k <= 0 || k > nums.length) {
+            return ans;
+        }
+        
+        int len = nums.length;
+        
+        for (int i = 0; i <= len - k; i++) {
+            int[] copy = Arrays.copyOfRange(nums, i, i + k);
+            if ( k % 2 == 1) {
+                ans.add(quickSelect(copy, 0, k - 1, k/2));
+            } else {
+                ans.add(quickSelect(copy, 0, k - 1, k/2 - 1));
+            }
+        }
+        
+        return ans;
+    }
+    
+// Lomuto partition scheme
+    private int quickSelect_1(int[] nums, int start, int end, int k) {
+        if (start == end) {
+            return nums[start];
+        }
+        
+        int pivot = nums[start];
+        
+        int i = end, j = end;
+        while (start < j) {
+            if (nums[j] > pivot) {
+                swap(nums, j, i);
+                i--;
+            }
+            j--;
+        }
+        
+        swap(nums, start, i);
+        if (i == k) {
+            return nums[i];
+        } else if (i > k) {
+            return quickSelect(nums, start, i - 1, k);
+        } else {
+            return quickSelect(nums, i + 1, end, k);
+        }
+    }
+    
+// Hoare partition scheme
+    private int quickSelect(int[] A, int start, int end , int k) {
+
+        if (start == end)
+            return A[start];
+        
+        int left = start, right = end;
+        int pivot = A[(start + end) / 2];
+
+        while (left <= right) {
+            while (left <= right && A[left] < pivot) {
+                left++;
+            }
+
+            while (left <= right && A[right] > pivot) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = A[left];
+                A[left] = A[right];
+                A[right] = temp;
+                
+                left++;
+                right--;
+            }
+        }
+
+        if (right >= k && start <= right)
+            return quickSelect(A, start, right, k);
+        else if (left <= k && left <= end)
+            return quickSelect(A, left, end, k);
+        else
+            return A[k];
+    }
+
+    
+    private void swap (int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
