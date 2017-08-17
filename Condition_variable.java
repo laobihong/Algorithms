@@ -241,3 +241,9 @@ the lock before the wait returns. */
   }
  
 }
+
+/**
+ * For Semaphore, check Java docs and the two good tutorials
+ * https://www.mkyong.com/java/java-thread-mutex-and-semaphore-example/
+ * http://www.geeksforgeeks.org/semaphore-in-java/
+ */
