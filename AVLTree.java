@@ -1,6 +1,5 @@
 package test;
 
-
 /**
  * http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
  * http://www.geeksforgeeks.org/avl-tree-set-2-deletion/
@@ -242,4 +241,8 @@ class Node {
 		left = null;
 		right = null;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> aee57d0b4a7320ca8cf17b569faf9dd07a187242
