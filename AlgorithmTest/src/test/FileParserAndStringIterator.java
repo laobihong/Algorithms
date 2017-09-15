@@ -31,6 +31,16 @@ public class FileParserAndStringIterator {
 		} 
 	}
 	
+	public void closeReaders() throws IOException{
+		if (br != null) {
+			br.close();
+		}
+		
+		if (fr != null) {
+			fr.close();
+		}
+	}
+	
 	public boolean hasNext() throws IOException{
 		if (!consumed) {
 			return true;
@@ -59,5 +69,6 @@ public class FileParserAndStringIterator {
 		while (iterator.hasNext()) {
 			System.out.println(iterator.next());
 		}
+		iterator.closeReaders();
 	}
 }
