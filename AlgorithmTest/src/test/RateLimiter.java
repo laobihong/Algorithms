@@ -20,7 +20,7 @@ public class RateLimiter {
     private Semaphore mutex;
     
     public RateLimiter(int tokensPerUnit, TimeUnit unit) {
-        capacity = tokensPerSecond = (int) (tokensPerUnit / unit.toSeconds(1L));
+        capacity = tokensPerSecond = (int) (tokensPerUnit / unit.toSeconds(1L)); // MINUTES.toSeconds(1L) returns 60. 1L represents 60 seconds
         mutex = new Semaphore(1); // only 1 permit, so works as a mutex
     }
     
@@ -58,9 +58,9 @@ public class RateLimiter {
     }
     
     public static void main(String[] args) throws InterruptedException{
-        RateLimiter rl = new RateLimiter(250, TimeUnit.MINUTES);
+        RateLimiter rl = new RateLimiter(250, TimeUnit.MINUTES);  // TimeUnit.MINUTES returns MINUTES
         // elapse 1 second so there are 4 resources available
-        // then the expected result is among the 10 thread, 4 will succeed and the other 6 will fail
+        // then the expected result is that among the 10 threads, 4 will succeed and the other 6 will fail
         Thread.sleep(1000L);
         for (int i = 0; i < 10; i++) {
             ClientThread ct = new ClientThread(Integer.toString(i), rl);
