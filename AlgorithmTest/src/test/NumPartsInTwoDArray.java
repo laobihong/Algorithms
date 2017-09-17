@@ -33,6 +33,17 @@ public class NumPartsInTwoDArray {
         return result;
     }
     
+    /**
+     * 
+     * @param set
+     * @param curRow
+     * @param curCol
+     * @param sequence Current sequence num. To distinguish between the upper and lower corners, add an offset (total # of elements) for the
+     *                 lower corner.
+     * @param expected Expect a '/' or '\\'
+     * @param up       True: expect to take the up corner, false otherwise 
+     * @param a
+     */
     private static void helper(Set<Integer> set, int curRow, int curCol, int sequence,
                         char expected, boolean up, char[][] a) {
         int row = a.length, col = a[0].length, total = row * col;
