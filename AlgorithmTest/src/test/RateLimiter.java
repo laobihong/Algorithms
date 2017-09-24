@@ -58,7 +58,7 @@ public class RateLimiter {
     }
     
     public static void main(String[] args) throws InterruptedException{
-        RateLimiter rl = new RateLimiter(250, TimeUnit.MINUTES);  // TimeUnit.MINUTES returns MINUTES
+        RateLimiter rl = new RateLimiter(50, TimeUnit.MINUTES);  // TimeUnit.MINUTES returns MINUTES
         // elapse 1 second so there are 4 resources available
         // then the expected result is that among the 10 threads, 4 will succeed and the other 6 will fail
         Thread.sleep(1000L);

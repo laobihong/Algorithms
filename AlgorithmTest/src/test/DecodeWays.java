@@ -29,7 +29,9 @@ public class DecodeWays {
     
     public static void main(String[] args) {
         //System.out.println(numDecodings("11"));
-        System.out.println((char)('a' + 1));
+        //System.out.println((char)('a' + 1));
+        int total = (int)Math.pow(10, 9) + 7;
+        System.out.println(total);
     }
 
 }
