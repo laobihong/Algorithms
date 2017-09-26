@@ -21,7 +21,6 @@ public class KSubsetsWithEqualSum {
         }
         int subset = sum / k;
         int N = input.length;
-        // boolean[] used = new boolean[N];
         int used = 0;
         boolean[] visited = new boolean[1 << N];
         boolean[] isValid = new boolean[1 << N];
@@ -32,7 +31,7 @@ public class KSubsetsWithEqualSum {
     public static boolean helper_mem(int[] input, int curSum, int curK, int k, int subset, int used, boolean[] visited,
             boolean[] isValid) {
         if (curK == k) {
-            // edit 1!!!!!
+            // edit 1!!!!! no actual impact?
             visited[used] = true;
             isValid[used] = true;
             return true;
@@ -50,7 +49,7 @@ public class KSubsetsWithEqualSum {
             }
             if (curSum + input[i] == subset) {
                 if (helper_mem(input, 0, curK + 1, k, subset, used | cur, visited, isValid)) {
-                    // edit 2!!!!
+                    // edit 2!!!! used -> used | cur
                     visited[used | cur] = true;
                     isValid[used | cur] = true;
                     return true;
