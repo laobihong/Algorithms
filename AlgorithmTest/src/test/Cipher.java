@@ -162,6 +162,12 @@ class Cipher {
           d -= 26;
       }
       System.out.println(d);
-  }
+      List<String> list = new ArrayList<>();
+      list.add("a"); list.add("b"); list.add("a");
+      Set<String> set = new HashSet<>(list);
+      for(String s: set) {
+          System.out.print(s + " ");
+      }
+  } 
 }
 
