@@ -49,15 +49,14 @@ public class KSubsetsWithEqualSum {
             }
             if (curSum + input[i] == subset) {
                 if (helper_mem(input, 0, curK + 1, k, subset, used | cur, visited, isValid)) {
-                    // edit 2!!!! used -> used | cur
-                    visited[used | cur] = true;
-                    isValid[used | cur] = true;
+                    visited[used] = true;
+                    isValid[used] = true;
                     return true;
                 }
             } else if (curSum + input[i] < subset) {
                 if (helper_mem(input, curSum + input[i], curK, k, subset, used | cur, visited, isValid)) {
-                    visited[used | cur] = true;
-                    isValid[used | cur] = true;
+                    visited[used] = true;
+                    isValid[used] = true;
                     return true;
                 }
             }
@@ -123,6 +122,7 @@ public class KSubsetsWithEqualSum {
         System.out.println(arrayKBucketsWithSameSum_mem(input, 10)); // 25ms
         System.out.println(System.currentTimeMillis() - startTime);
         // System.out.println(arrayKBucketsWithSameSum(input, 10)); // 958ms
+
     }
 
 }
