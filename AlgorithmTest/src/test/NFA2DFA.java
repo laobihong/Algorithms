@@ -58,6 +58,8 @@ public class NFA2DFA {
             if(valid) {
                 return true;
             }
+            // don't delete??????
+            sb.deleteCharAt(sb.length() - 1);
         }
         return false;
     }

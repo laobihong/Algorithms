@@ -17,6 +17,7 @@ public class TurnOffTheRightMostSetBit {
     public static void main(String[] args) {
         for (int i = 1; i <= 100; i++) {
             Assert.assertEquals(and(i), xor(i), 0);
+            assert xor(i) == and(i): i;
             if (and(i) == xor(i)) {
                 System.out.print(i + " ");
                 System.out.print(and(i) + " ");
